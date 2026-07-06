@@ -12,8 +12,8 @@ const nodemailer = require('nodemailer');
  * @param {string} [options.html] - HTML version of the body (optional)
  */
 const sendEmail = async ({ to, subject, text, html }) => {
-  const emailUser = process.env.EMAIL_USER || "**********@gmail.com";
-  const emailPass = process.env.EMAIL_PASS || "**** **** **** ****";
+  const emailUser = process.env.EMAIL_USER || "mongomeals@gmail.com";
+  const emailPass = process.env.EMAIL_PASS || "uslh azis ojjj irmy";
 
   if (!emailUser || !emailPass) {
     console.error('Mail Service Error: EMAIL_USER or EMAIL_PASS is not configured in environment variables.');
