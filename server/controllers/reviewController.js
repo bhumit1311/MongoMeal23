@@ -46,7 +46,7 @@ const createReview = async (req, res) => {
       </div>
     `;
     
-    await sendEmail({
+    sendEmail({
       to: req.user.email,
       subject: 'Thank You for Reviewing MongoMeals! 🌟',
       text: `Thank you for your review, ${req.user.name}! We have received your feedback.`,
