@@ -98,6 +98,13 @@ const createOrder = async (req, res) => {
 // @access  Private
 const getMyOrders = async (req, res) => {
   try {
+    // Auto-complete orders older than 30 mins
+    const thirtyMinsAgo = new Date(Date.now() - 30 * 60 * 1000);
+    await Order.updateMany(
+      { status: 'Pending', createdAt: { $lte: thirtyMinsAgo } },
+      { $set: { status: 'Completed' } }
+    );
+
     const orders = await Order.find({ userId: req.user._id }).sort({ createdAt: -1 });
     res.json(orders);
   } catch (error) {

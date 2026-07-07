@@ -8,6 +8,8 @@ const calculateTier = (points) => {
   return 'Silver';
 };
 
+const { sendEmail } = require('../utils/mailService');
+
 // @desc    Create a new review
 // @route   POST /api/reviews
 // @access  Private
@@ -29,6 +31,28 @@ const createReview = async (req, res) => {
     });
 
     const savedReview = await review.save();
+
+    // Send Thank You Email
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+        <h2 style="color: #c5a059;">Thank You for Your Review, ${req.user.name}!</h2>
+        <p>We have successfully received your feedback. Your opinion is incredibly valuable to us and helps us maintain the highest standards of culinary excellence.</p>
+        <p><strong>Your Rating:</strong> ${rating} / 5</p>
+        <p><strong>Your Comments:</strong> "${message}"</p>
+        <p>If your review is approved, you will earn <strong>50 Prestige Points</strong>!</p>
+        <br>
+        <p>Warm regards,</p>
+        <p><strong>The MongoMeals Team</strong></p>
+      </div>
+    `;
+    
+    await sendEmail({
+      to: req.user.email,
+      subject: 'Thank You for Reviewing MongoMeals! 🌟',
+      text: `Thank you for your review, ${req.user.name}! We have received your feedback.`,
+      html: emailHtml
+    });
+
     res.status(201).json(savedReview);
   } catch (error) {
     console.error('Error creating review:', error);

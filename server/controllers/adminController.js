@@ -19,6 +19,13 @@ const getUsers = async (req, res) => {
 // @access  Private/Admin
 const getOrders = async (req, res) => {
   try {
+    // Auto-complete orders older than 30 mins
+    const thirtyMinsAgo = new Date(Date.now() - 30 * 60 * 1000);
+    await Order.updateMany(
+      { status: 'Pending', createdAt: { $lte: thirtyMinsAgo } },
+      { $set: { status: 'Completed' } }
+    );
+
     const orders = await Order.find({}).populate('userId', 'name email').sort('-createdAt');
     res.json(orders);
   } catch (error) {
