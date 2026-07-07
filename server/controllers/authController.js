@@ -75,12 +75,7 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      // Send Login Alert Email
-      sendEmail({
-        to: user.email,
-        subject: 'MongoMeals Login Alert',
-        text: `Hello ${user.name},\n\nThis is to inform you that your MongoMeals account was successfully signed in on ${new Date().toLocaleString()}.\n\nIf this was not you, please contact support immediately.\n\nBest regards,\nThe MongoMeals Team`
-      });
+      // Email removed as per user request (only first time login and review time emails remain)
 
       res.json({
         _id: user._id,
