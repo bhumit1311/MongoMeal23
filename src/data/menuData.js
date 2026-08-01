@@ -96,7 +96,7 @@ export const menuItems = [
     "type": "veg",
     "price": 220,
     "description": "Yellow lentils tempered with ghee, cumin seeds, garlic and red chilies.",
-    "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1546833998-8778e4a20b31?w=800&fit=crop"
   },
   {
     "id": 12,
@@ -114,7 +114,7 @@ export const menuItems = [
     "type": "veg",
     "price": 180,
     "description": "Steamed basmati rice tossed with roasted cumin seeds and fresh coriander.",
-    "image": "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=800&fit=crop"
   },
   {
     "id": 14,
@@ -159,7 +159,7 @@ export const menuItems = [
     "type": "veg",
     "price": 40,
     "description": "Whole wheat flatbread baked crispy in clay oven tandoor.",
-    "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&fit=crop"
   },
   {
     "id": 19,
@@ -168,7 +168,7 @@ export const menuItems = [
     "type": "veg",
     "price": 75,
     "description": "Multi-layered flaky whole wheat flatbread cooked with ghee.",
-    "image": "https://images.unsplash.com/photo-1601050690297-108e487d7b3d?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=800&fit=crop"
   },
   {
     "id": 20,
@@ -225,6 +225,7 @@ export const menuItems = [
     "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=800&fit=crop"
   }
 ];
+
 
 
 
