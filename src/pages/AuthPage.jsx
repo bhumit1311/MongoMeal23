@@ -28,10 +28,11 @@ export default function AuthPage() {
     try {
       if (mode === 'register') {
         await register(form);
+        navigate('/');
       } else {
         await login(form);
+        navigate('/dashboard');
       }
-      navigate('/dashboard');
     } catch (err) {
       setError(err.message || 'Authentication failed.');
     } finally {

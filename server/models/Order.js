@@ -13,7 +13,7 @@ const orderSchema = new mongoose.Schema({
   tax: { type: Number, required: true },
   serviceFee: { type: Number, required: true },
   total: { type: Number, required: true },
-  status: { type: String, enum: ['Pending', 'Preparing', 'Completed', 'Cancelled'], default: 'Pending' },
+  status: { type: String, enum: ['Pending', 'Cooking', 'Ready', 'Preparing', 'Completed', 'Cancelled'], default: 'Pending' },
   createdAt: { type: Date, default: Date.now }
 });
 

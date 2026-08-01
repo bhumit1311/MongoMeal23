@@ -16,33 +16,47 @@ export default function Dashboard() {
   const [expandedOrder, setExpandedOrder] = useState(null);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      apiFetch('/reservations/my-reservations')
-        .then(data => {
-          const mapped = data.map(r => ({...r, id: r._id, time: r.time || '19:00'}));
-          setReservations(mapped);
-        })
-        .catch(err => console.error(err));
+    let intervalId;
 
-      apiFetch('/orders/my-orders')
-        .then(data => {
-          const mappedOrders = data.map(o => ({
-            id: o._id.substring(o._id.length - 8).toUpperCase(),
-            date: new Date(o.createdAt).toLocaleDateString(),
-            status: o.status,
-            items: o.items.map(i => ({ name: i.name, qty: i.quantity, price: i.price })),
-            subtotal: o.subtotal,
-            tax: o.tax,
-            serviceFee: o.serviceFee,
-            total: o.total
-          }));
-          setOrders(mappedOrders);
-        })
-        .catch(err => console.error(err));
-    } else {
-      setReservations(dashboardReservations);
-      setOrders(dashboardOrders);
+    const fetchOrdersAndReservations = () => {
+      if (isAuthenticated) {
+        apiFetch('/reservations/my-reservations')
+          .then(data => {
+            const mapped = data.map(r => ({...r, id: r._id, time: r.time || '19:00'}));
+            setReservations(mapped);
+          })
+          .catch(err => console.error(err));
+
+        apiFetch('/orders/my-orders')
+          .then(data => {
+            const mappedOrders = data.map(o => ({
+              id: o._id.substring(o._id.length - 8).toUpperCase(),
+              date: new Date(o.createdAt).toLocaleDateString(),
+              status: o.status,
+              items: o.items.map(i => ({ name: i.name, qty: i.quantity, price: i.price })),
+              subtotal: o.subtotal,
+              tax: o.tax,
+              serviceFee: o.serviceFee,
+              total: o.total
+            }));
+            setOrders(mappedOrders);
+          })
+          .catch(err => console.error(err));
+      } else {
+        setReservations(dashboardReservations);
+        setOrders(dashboardOrders);
+      }
+    };
+
+    fetchOrdersAndReservations();
+
+    if (isAuthenticated) {
+      intervalId = setInterval(fetchOrdersAndReservations, 5000);
     }
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [isAuthenticated]);
 
   const bg = isDark ? 'bg-obsidian' : 'bg-light-bg';
@@ -155,7 +169,15 @@ export default function Dashboard() {
                       <div className="flex items-center gap-4 w-full sm:w-auto">
                         <div className="text-right">
                           <p className="text-gold font-serif font-semibold">₹{orderTotal.toFixed(2)}</p>
-                          <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/10 text-green-400">{order.status}</span>
+                          <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
+                            order.status === 'Pending' 
+                              ? 'bg-amber-500/15 text-amber-400 border border-amber-500/20' 
+                              : order.status === 'Cooking' 
+                              ? 'bg-orange-500/15 text-orange-400 border border-orange-500/20' 
+                              : 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20'
+                          }`}>
+                            {order.status}
+                          </span>
                         </div>
                         <ChevronRight size={18} className={`${textMuted} transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
                       </div>

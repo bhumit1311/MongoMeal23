@@ -19,11 +19,20 @@ const getUsers = async (req, res) => {
 // @access  Private/Admin
 const getOrders = async (req, res) => {
   try {
-    // Auto-complete orders older than 30 mins
-    const thirtyMinsAgo = new Date(Date.now() - 30 * 60 * 1000);
+    const now = Date.now();
+    const thirtySecsAgo = new Date(now - 30 * 1000);
+    const sixtySecsAgo = new Date(now - 60 * 1000);
+
+    // Auto update orders: Pending -> Cooking after 30 seconds
     await Order.updateMany(
-      { status: 'Pending', createdAt: { $lte: thirtyMinsAgo } },
-      { $set: { status: 'Completed' } }
+      { status: 'Pending', createdAt: { $lte: thirtySecsAgo } },
+      { $set: { status: 'Cooking' } }
+    );
+
+    // Auto update orders: Cooking -> Ready after another 30 seconds (60 seconds total)
+    await Order.updateMany(
+      { status: 'Cooking', createdAt: { $lte: sixtySecsAgo } },
+      { $set: { status: 'Ready' } }
     );
 
     const orders = await Order.find({}).populate('userId', 'name email').sort('-createdAt');
