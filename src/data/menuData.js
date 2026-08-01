@@ -15,7 +15,7 @@ export const menuItems = [
     "type": "veg",
     "price": 90,
     "description": "Golden crispy pastry stuffed with spiced potato and green peas, served with mint chutney.",
-    "image": "https://images.unsplash.com/photo-1601050690297-108e487d7b3d?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?w=800&fit=crop"
   },
   {
     "id": 3,
@@ -168,7 +168,7 @@ export const menuItems = [
     "type": "veg",
     "price": 75,
     "description": "Multi-layered flaky whole wheat flatbread cooked with ghee.",
-    "image": "https://images.unsplash.com/photo-1601050690297-108e487d7b3d?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=800&fit=crop"
   },
   {
     "id": 20,
@@ -177,7 +177,7 @@ export const menuItems = [
     "type": "veg",
     "price": 130,
     "description": "Warm milk dumplings soaked in cardamom and rose sugar syrup.",
-    "image": "https://images.unsplash.com/photo-1571006682858-a4c8a51d1020?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&fit=crop"
   },
   {
     "id": 21,
@@ -225,6 +225,7 @@ export const menuItems = [
     "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=800&fit=crop"
   }
 ];
+
 
 
 

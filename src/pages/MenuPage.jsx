@@ -282,11 +282,11 @@ export default function MenuPage() {
                   {/* Image Container with Badges */}
                   <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden mb-[20px] bg-black/5">
                     <img
-                      src={item.image || 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&fit=crop'}
+                      src={item.image || 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=800&fit=crop'}
                       alt={item.name}
                       loading="lazy"
                       onError={(e) => {
-                        e.target.src = 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&fit=crop';
+                        e.target.src = 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=800&fit=crop';
                       }}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
