@@ -24,11 +24,16 @@ const sendEmail = async ({ to, subject, text, html }) => {
 
   try {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
       auth: {
         user: emailUser,
         pass: emailPass,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
 
     const mailOptions = {
