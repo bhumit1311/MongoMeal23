@@ -293,6 +293,51 @@ app.get('/api/seed', async (req, res) => {
   }
 });
 
+app.get('/api/debug-mail', async (req, res) => {
+  try {
+    const nodemailer = require('nodemailer');
+    const emailUser = process.env.EMAIL_USER || "mongomeals@gmail.com";
+    const emailPass = process.env.EMAIL_PASS || "uslh azis ojjj irmy";
+
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: emailUser,
+        pass: emailPass,
+      },
+      tls: {
+        rejectUnauthorized: false
+      }
+    });
+
+    transporter.verify((error, success) => {
+      if (error) {
+        res.status(500).json({
+          status: "failed",
+          message: "Nodemailer verification failed",
+          error: error.message,
+          stack: error.stack,
+          emailUserConfigureded: emailUser,
+          emailPassLength: emailPass ? emailPass.length : 0
+        });
+      } else {
+        res.json({
+          status: "success",
+          message: "Nodemailer is fully functional and ready to send emails!",
+          emailUser: emailUser
+        });
+      }
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message
+    });
+  }
+});
+
 // Custom Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
