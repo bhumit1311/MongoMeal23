@@ -28,7 +28,7 @@ const menuItems = [
     "type": "veg",
     "price": 90,
     "description": "Golden crispy pastry stuffed with spiced potato and green peas, served with mint chutney.",
-    "image": "https://images.unsplash.com/photo-1601050690297-108e487d7b3d?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1601050690117-6a7ded8ae15d?w=800&fit=crop"
   },
   {
     "id": 3,
@@ -109,7 +109,7 @@ const menuItems = [
     "type": "veg",
     "price": 220,
     "description": "Yellow lentils tempered with ghee, cumin seeds, garlic and red chilies.",
-    "image": "https://images.unsplash.com/photo-1546833998-8778e4a20b31?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1618449840665-9088c7b3263c?w=800&fit=crop"
   },
   {
     "id": 12,
@@ -127,7 +127,7 @@ const menuItems = [
     "type": "veg",
     "price": 180,
     "description": "Steamed basmati rice tossed with roasted cumin seeds and fresh coriander.",
-    "image": "https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1516684732162-798a0062be99?w=800&fit=crop"
   },
   {
     "id": 14,
@@ -172,7 +172,7 @@ const menuItems = [
     "type": "veg",
     "price": 40,
     "description": "Whole wheat flatbread baked crispy in clay oven tandoor.",
-    "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1619894991209-9f9694be045a?w=800&fit=crop"
   },
   {
     "id": 19,
@@ -181,7 +181,7 @@ const menuItems = [
     "type": "veg",
     "price": 75,
     "description": "Multi-layered flaky whole wheat flatbread cooked with ghee.",
-    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1664487521-a30ad0e93a44?w=800&fit=crop"
   },
   {
     "id": 20,
@@ -190,7 +190,7 @@ const menuItems = [
     "type": "veg",
     "price": 130,
     "description": "Warm milk dumplings soaked in cardamom and rose sugar syrup.",
-    "image": "https://images.unsplash.com/photo-1571006682858-a4c8a51d1020?w=800&fit=crop"
+    "image": "https://images.unsplash.com/photo-1666274377-c785a53d40de?w=800&fit=crop"
   },
   {
     "id": 21,
