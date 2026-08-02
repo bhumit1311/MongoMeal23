@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getUsers, getOrders, getReservations } = require('../controllers/adminController');
+const { getUsers, getOrders, getReservations, deleteUser } = require('../controllers/adminController');
 const { getReviewsAdmin, updateReviewStatus } = require('../controllers/reviewController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
@@ -8,6 +8,7 @@ const { protect, admin } = require('../middleware/authMiddleware');
 router.use(protect, admin);
 
 router.get('/users', getUsers);
+router.delete('/users/:id', deleteUser);
 router.get('/orders', getOrders);
 router.get('/reservations', getReservations);
 router.get('/reviews', getReviewsAdmin);

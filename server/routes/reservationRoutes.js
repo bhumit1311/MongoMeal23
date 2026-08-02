@@ -23,8 +23,8 @@ const setOptionalUser = async (req, res, next) => {
   next();
 };
 
-router.post('/', protect, createReservation);
-router.post('/chefs-table', protect, createChefsTableReservation);
+router.post('/', setOptionalUser, createReservation);
+router.post('/chefs-table', setOptionalUser, createChefsTableReservation);
 router.get('/my-reservations', protect, getUserReservations);
 router.get('/occupied', getOccupiedTables);
 

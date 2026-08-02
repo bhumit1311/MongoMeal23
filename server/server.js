@@ -13,6 +13,7 @@ const eventRoutes = require('./routes/eventRoutes');
 const userRoutes = require('./routes/userRoutes');
 const rewardRoutes = require('./routes/rewardRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
+const { protect, admin } = require('./middleware/authMiddleware');
 
 const app = express();
 
@@ -38,7 +39,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/rewards', rewardRoutes);
 app.use('/api/reviews', reviewRoutes);
 
-app.get('/api/seed', async (req, res) => {
+app.get('/api/seed', protect, admin, async (req, res) => {
   try {
     const MenuItem = require('./models/MenuItem');
     const menuItems = [
@@ -284,6 +285,8 @@ app.get('/api/seed', async (req, res) => {
       password: hashedPassword,
       role: 'admin',
       points: 1000,
+      rewardPoints: 1000,
+      totalEarned: 1000,
       tier: 'Platinum'
     });
 
@@ -293,7 +296,7 @@ app.get('/api/seed', async (req, res) => {
   }
 });
 
-app.get('/api/debug-mail', async (req, res) => {
+app.get('/api/debug-mail', protect, admin, async (req, res) => {
   try {
     const nodemailer = require('nodemailer');
     const emailUser = process.env.EMAIL_USER || "mongomeals@gmail.com";
@@ -339,6 +342,11 @@ app.get('/api/debug-mail', async (req, res) => {
   }
 });
 
+// 404 Handler
+app.use((req, res, next) => {
+  res.status(404).json({ message: `Not Found - ${req.originalUrl}` });
+});
+
 // Custom Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -347,11 +355,6 @@ app.use((err, req, res, next) => {
     message: err.message,
     stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
   });
-});
-
-// 404 Handler
-app.use((req, res, next) => {
-  res.status(404).json({ message: `Not Found - ${req.originalUrl}` });
 });
 
 // Start Server

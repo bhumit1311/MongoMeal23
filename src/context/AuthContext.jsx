@@ -6,18 +6,24 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]); // Kept for compatibility if used
+  const [loading, setLoading] = useState(true);
 
   const fetchProfile = useCallback(() => {
     const token = localStorage.getItem('mongomeals-token');
     if (token) {
+      setLoading(true);
       apiFetch('/auth/profile')
         .then((userData) => {
           setUser(userData);
+          setLoading(false);
         })
         .catch(() => {
           localStorage.removeItem('mongomeals-token');
           setUser(null);
+          setLoading(false);
         });
+    } else {
+      setLoading(false);
     }
   }, []);
 
@@ -58,11 +64,12 @@ export function AuthProvider({ children }) {
     user,
     users, // empty array now, should probably fetch from API if admin
     isAuthenticated: Boolean(user),
+    loading,
     register,
     login,
     logout,
     fetchProfile,
-  }), [user, users, register, login, logout, fetchProfile]);
+  }), [user, users, loading, register, login, logout, fetchProfile]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

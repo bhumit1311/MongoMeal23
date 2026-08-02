@@ -37,7 +37,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<MenuPage />} />
-          <Route path="/reservation" element={<ProtectedRoute><Reservation /></ProtectedRoute>} />
+          <Route path="/reservation" element={<Reservation />} />
           <Route path="/rewards" element={<PrestigeRewards />} />
           <Route path="/events" element={<Events />} />
           <Route path="/dashboard" element={<Dashboard />} />

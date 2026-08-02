@@ -308,19 +308,25 @@ mongoose.connect(MONGO_URI)
       password: hashedPassword,
       role: 'admin',
       points: 1000,
+      rewardPoints: 1000,
+      totalEarned: 1000,
       tier: 'Platinum'
     });
     console.log('Successfully seeded admin user (admin@mongomeals.com / admin123)!');
 
     // Seed Orders
     const orderDocs = dashboardOrders.map(o => {
-      const subtotal = o.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const subtotal = o.items.reduce((sum, item) => sum + (item.price * (item.qty || item.quantity)), 0);
       const tax = subtotal * 0.05;
       const serviceFee = 50;
       const total = subtotal + tax + serviceFee;
       return {
         userId: adminUser._id,
-        items: o.items,
+        items: o.items.map(item => ({
+          name: item.name,
+          price: item.price,
+          quantity: item.qty || item.quantity
+        })),
         subtotal,
         tax,
         serviceFee,

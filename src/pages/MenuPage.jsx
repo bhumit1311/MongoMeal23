@@ -27,9 +27,11 @@ export default function MenuPage() {
   const [favorites, setFavorites] = useState(new Set());
   const [menuItems, setMenuItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
+    setError(null);
     apiFetch('/menu')
       .then(data => {
         setMenuItems(data);
@@ -37,6 +39,7 @@ export default function MenuPage() {
       })
       .catch(err => {
         console.error('Error fetching menu items:', err);
+        setError(err.message || 'Failed to load menu items.');
         setIsLoading(false);
       });
   }, []);
@@ -249,6 +252,16 @@ export default function MenuPage() {
           <div className="flex flex-col items-center justify-center py-32 text-[#d4af37]">
             <Loader2 size={48} className="animate-spin mb-6" />
             <p className="text-[14px] tracking-[0.3em] uppercase font-bold text-center">Curating the Menu...</p>
+          </div>
+        ) : error ? (
+          <div className="flex flex-col items-center justify-center py-32 text-center">
+            <div className="w-24 h-24 rounded-full border border-red-500/20 flex items-center justify-center mb-6 bg-red-500/5">
+              <span className="text-red-500 text-3xl">⚠️</span>
+            </div>
+            <h2 className={`font-serif text-[34px] ${textPrimary} mb-4`}>Failed to load menu</h2>
+            <p className={`${textMuted} text-[17px] max-w-md mx-auto mb-8 font-light leading-relaxed`}>
+              {error}
+            </p>
           </div>
         ) : (
           <>

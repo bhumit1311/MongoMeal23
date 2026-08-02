@@ -5,7 +5,8 @@ import { useTheme } from '../context/ThemeContext';
 import { apiFetch } from '../services/api';
 
 const AdminPage = () => {
-  const { theme } = useTheme();
+  const { isDark } = useTheme();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('users');
   const [users, setUsers] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -45,7 +46,6 @@ const AdminPage = () => {
   const [editingReward, setEditingReward] = useState(null);
 
   // Theme styling
-  const isDark = theme === 'dark';
   const bgClass = isDark ? 'bg-neutral-900 text-neutral-100' : 'bg-neutral-50 text-neutral-900';
   const cardClass = isDark ? 'bg-neutral-800 border-neutral-700' : 'bg-white border-neutral-200';
   const textMuted = isDark ? 'text-neutral-400' : 'text-neutral-500';
@@ -169,6 +169,20 @@ const AdminPage = () => {
         alert('Menu item deleted successfully!');
       } catch (err) {
         alert('Failed to delete item: ' + err.message);
+      }
+    }
+  };
+
+  const handleDeleteUser = async (id) => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      try {
+        await apiFetch(`/admin/users/${id}`, {
+          method: 'DELETE'
+        });
+        fetchData();
+        alert('User deleted successfully!');
+      } catch (err) {
+        alert('Failed to delete user: ' + err.message);
       }
     }
   };
@@ -349,6 +363,7 @@ const AdminPage = () => {
                       <th className={`p-4 font-serif font-medium ${isDark ? 'text-neutral-200' : 'text-neutral-800'}`}>Role</th>
                       <th className={`p-4 font-serif font-medium ${isDark ? 'text-neutral-200' : 'text-neutral-800'}`}>Tier</th>
                       <th className={`p-4 font-serif font-medium text-right ${isDark ? 'text-neutral-200' : 'text-neutral-800'}`}>Points</th>
+                      <th className={`p-4 font-serif font-medium text-right ${isDark ? 'text-neutral-200' : 'text-neutral-800'}`}>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -363,6 +378,16 @@ const AdminPage = () => {
                         </td>
                         <td className={`p-4 font-medium ${isDark ? 'text-neutral-200' : 'text-neutral-800'}`}>{u.tier}</td>
                         <td className={`p-4 text-right font-semibold ${isDark ? 'text-neutral-100' : 'text-neutral-900'}`}>{u.points}</td>
+                        <td className="p-4 text-right">
+                          {u._id !== user?._id && (
+                            <button
+                              onClick={() => handleDeleteUser(u._id)}
+                              className="text-red-500 hover:text-red-700 transition-colors font-medium text-sm ml-auto cursor-pointer"
+                            >
+                              Delete
+                            </button>
+                          )}
+                        </td>
                       </tr>
                     ))}
                     {users.length === 0 && (

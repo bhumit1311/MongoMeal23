@@ -53,9 +53,31 @@ const getReservations = async (req, res) => {
     res.status(500).json({ message: 'Error fetching reservations', error: error.message });
   }
 };
+// @desc    Delete a user
+// @route   DELETE /api/admin/users/:id
+// @access  Private/Admin
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Prevent admin from deleting themselves
+    if (user._id.toString() === req.user._id.toString()) {
+      return res.status(400).json({ message: 'Admin cannot delete themselves' });
+    }
+
+    await User.deleteOne({ _id: req.params.id });
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting user', error: error.message });
+  }
+};
 
 module.exports = {
   getUsers,
   getOrders,
-  getReservations
+  getReservations,
+  deleteUser
 };

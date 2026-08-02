@@ -9,7 +9,7 @@ const { protect } = require('../middleware/authMiddleware');
 // but we'll try to extract the user from the token if possible. Let's just make it entirely public
 // and if they pass a token, we handle it in auth check, or just rely on protect for /my-orders.
 
-const { jwt } = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const optionalAuth = async (req, res, next) => {
@@ -17,7 +17,7 @@ const optionalAuth = async (req, res, next) => {
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
       token = req.headers.authorization.split(' ')[1];
-      const decoded = require('jsonwebtoken').verify(token, process.env.JWT_SECRET || 'fallback_secret');
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback_secret');
       req.user = await User.findById(decoded.id).select('-password');
     } catch (error) {
       console.error(error);
@@ -26,7 +26,7 @@ const optionalAuth = async (req, res, next) => {
   next();
 };
 
-router.post('/', protect, createOrder);
+router.post('/', optionalAuth, createOrder);
 router.route('/my-orders').get(protect, getMyOrders);
 
 module.exports = router;
